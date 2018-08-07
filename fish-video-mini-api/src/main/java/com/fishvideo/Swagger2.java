@@ -22,7 +22,8 @@ import java.util.List;
 public class Swagger2 {
 
     /**
-     * @Description:swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
+     * swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
+     * @return
      */
     @Bean
     public Docket createRestApi() {
