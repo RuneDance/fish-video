@@ -26,6 +26,21 @@ public class RegistLoginController extends BasicController {
     private UserService userService;
 
     /**
+     * 设置redis用户session token
+     *
+     * @param users
+     * @return
+     */
+    public UsersVO setUserRedisSessionToken(Users users) {
+        String uniqueToken = UUID.randomUUID().toString();
+        redis.set(USER_REDIS_SESSION + ":" + users.getId(), uniqueToken, 1000 * 60 * 30);
+        UsersVO userVO = new UsersVO();
+        BeanUtils.copyProperties(users, userVO);
+        userVO.setUserToken(uniqueToken);
+        return userVO;
+    }
+
+    /**
      * 用户注册
      *
      * @param user
@@ -55,30 +70,12 @@ public class RegistLoginController extends BasicController {
         } else {
             return IMoocJSONResult.errorMsg("用户名已经存在，请换一个再试");
         }
-
+        //清空user对象中的密码
         user.setPassword("");
-
-//		String uniqueToken = UUID.randomUUID().toString();
-//		redis.set(USER_REDIS_SESSION + ":" + user.getId(), uniqueToken, 1000 * 60 * 30);
-//		
-//		UsersVO userVO = new UsersVO();
-//		BeanUtils.copyProperties(user, userVO);
-//		userVO.setUserToken(uniqueToken);
-
         UsersVO userVO = setUserRedisSessionToken(user);
-
         return IMoocJSONResult.ok(userVO);
     }
 
-    public UsersVO setUserRedisSessionToken(Users userModel) {
-        String uniqueToken = UUID.randomUUID().toString();
-        redis.set(USER_REDIS_SESSION + ":" + userModel.getId(), uniqueToken, 1000 * 60 * 30);
-
-        UsersVO userVO = new UsersVO();
-        BeanUtils.copyProperties(userModel, userVO);
-        userVO.setUserToken(uniqueToken);
-        return userVO;
-    }
 
     /**
      * 用户登录
@@ -90,19 +87,18 @@ public class RegistLoginController extends BasicController {
     @ApiOperation(value = "用户登录", notes = "用户登录的接口")
     @PostMapping("/login")
     public IMoocJSONResult login(@RequestBody Users user) throws Exception {
+
         String username = user.getUsername();
         String password = user.getPassword();
 
-//		Thread.sleep(3000);
-
+        //Thread.sleep(3000);
         // 1. 判断用户名和密码必须不为空
         if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             return IMoocJSONResult.ok("用户名或密码不能为空...");
         }
 
         // 2. 判断用户是否存在
-        Users userResult = userService.queryUserForLogin(username,
-                MD5Utils.getMD5Str(user.getPassword()));
+        Users userResult = userService.queryUserForLogin(username, MD5Utils.getMD5Str(user.getPassword()));
 
         // 3. 返回
         if (userResult != null) {
@@ -119,12 +115,11 @@ public class RegistLoginController extends BasicController {
      *
      * @param userId
      * @return
-     * @throws Exception
      */
     @ApiOperation(value = "用户注销", notes = "用户注销的接口")
     @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "query")
     @PostMapping("/logout")
-    public IMoocJSONResult logout(String userId) throws Exception {
+    public IMoocJSONResult logout(String userId) {
         redis.del(USER_REDIS_SESSION + ":" + userId);
         return IMoocJSONResult.ok();
     }
