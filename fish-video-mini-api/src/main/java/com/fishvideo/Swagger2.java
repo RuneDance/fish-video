@@ -48,7 +48,8 @@ public class Swagger2 {
     }
 
     /**
-     * @Description: 构建 api文档的信息
+     * 构建 api文档的信息
+     * @return
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
