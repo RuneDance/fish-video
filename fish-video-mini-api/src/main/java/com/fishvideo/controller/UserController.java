@@ -35,11 +35,9 @@ public class UserController extends BasicController {
 	private UserService userService;
 	
 	@ApiOperation(value="用户上传头像", notes="用户上传头像的接口")
-	@ApiImplicitParam(name="userId", value="用户id", required=true, 
-						dataType="String", paramType="query")
+	@ApiImplicitParam(name="userId", value="用户id", required=true, dataType="String", paramType="query")
 	@PostMapping("/uploadFace")
-	public IMoocJSONResult uploadFace(String userId, 
-				@RequestParam("file") MultipartFile[] files) throws Exception {
+	public IMoocJSONResult uploadFace(String userId, @RequestParam("file") MultipartFile[] files) throws Exception {
 		
 		if (StringUtils.isBlank(userId)) {
 			return IMoocJSONResult.errorMsg("用户id不能为空...");
@@ -95,10 +93,9 @@ public class UserController extends BasicController {
 	}
 	
 	@ApiOperation(value="查询用户信息", notes="查询用户信息的接口")
-	@ApiImplicitParam(name="userId", value="用户id", required=true, 
-						dataType="String", paramType="query")
+	@ApiImplicitParam(name="userId", value="用户id", required=true, dataType="String", paramType="query")
 	@PostMapping("/query")
-	public IMoocJSONResult query(String userId, String fanId) throws Exception {
+	public IMoocJSONResult query(String userId, String fanId) {
 		
 		if (StringUtils.isBlank(userId)) {
 			return IMoocJSONResult.errorMsg("用户id不能为空...");
@@ -115,8 +112,7 @@ public class UserController extends BasicController {
 	
 	
 	@PostMapping("/queryPublisher")
-	public IMoocJSONResult queryPublisher(String loginUserId, String videoId, 
-			String publishUserId) throws Exception {
+	public IMoocJSONResult queryPublisher(String loginUserId, String videoId, String publishUserId) {
 		
 		if (StringUtils.isBlank(publishUserId)) {
 			return IMoocJSONResult.errorMsg("");
