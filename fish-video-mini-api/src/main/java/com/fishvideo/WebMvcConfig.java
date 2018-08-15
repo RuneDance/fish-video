@@ -17,10 +17,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("file:C:/imooc_videos_dev/");
     }
 
-    /*@Bean(initMethod = "init")
+    @Bean(initMethod = "init")
     public ZKCuratorClient zkCuratorClient() {
         return new ZKCuratorClient();
-    }*/
+    }
 
     @Bean
     public MiniInterceptor miniInterceptor() {
