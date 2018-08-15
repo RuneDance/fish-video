@@ -29,10 +29,10 @@ public class ZKCuratorClient {
     private CuratorFramework client = null;
     final static Logger log = LoggerFactory.getLogger(ZKCuratorClient.class);
 
-//	@Autowired
-//	private BgmService bgmService;
+    //@Autowired
+    //private BgmService bgmService;
 
-//	public static final String ZOOKEEPER_SERVER = "192.168.1.210:2181";
+    //public static final String ZOOKEEPER_SERVER = "192.168.1.210:2181";
 
     @Autowired
     private ResourceConfig resourceConfig;
@@ -52,8 +52,8 @@ public class ZKCuratorClient {
         client.start();
 
         try {
-//			String testNodeData = new String(client.getData().forPath("/bgm/18052674D26HH3X4"));
-//			log.info("测试的节点数据为： {}", testNodeData);
+            //String testNodeData = new String(client.getData().forPath("/bgm/18052674D26HH3X4"));
+            //log.info("测试的节点数据为： {}", testNodeData);
             addChildWatch("/bgm");
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,19 +81,19 @@ public class ZKCuratorClient {
                     String operatorType = map.get("operType");
                     String songPath = map.get("path");
 
-//					String arr[] = path.split("/");
-//					String bgmId = arr[arr.length - 1];
+                    //String arr[] = path.split("/");
+                    //String bgmId = arr[arr.length - 1];
 
-//					Bgm bgm = bgmService.queryBgmById(bgmId);
-//					if (bgm == null) {
-//						return;
-//					}
+                    //Bgm bgm = bgmService.queryBgmById(bgmId);
+                    //if (bgm == null) {
+                    //	return;
+                    //}
 
                     // 1.1 bgm所在的相对路径
-//					String songPath = bgm.getPath();
+                    //String songPath = bgm.getPath();
 
                     // 2. 定义保存到本地的bgm路径
-//					String filePath = "C:\\imooc_videos_dev" + songPath;
+                    //String filePath = "C:\\imooc_videos_dev" + songPath;
                     String filePath = resourceConfig.getFileSpace() + songPath;
 
                     // 3. 定义下载的路径（播放url）
@@ -106,11 +106,11 @@ public class ZKCuratorClient {
                             finalPath += URLEncoder.encode(arrPath[i], "UTF-8");
                         }
                     }
-//					String bgmUrl = "http://192.168.1.2:8080/mvc" + finalPath;
+                    //String bgmUrl = "http://192.168.1.2:8080/mvc" + finalPath;
                     String bgmUrl = resourceConfig.getBgmServer() + finalPath;
 
                     if (operatorType.equals(BGMOperatorTypeEnum.ADD.type)) {
-                        // 下载bgm到spingboot服务器
+                        // 下载bgm到SpringBoot服务器
                         URL url = new URL(bgmUrl);
                         File file = new File(filePath);
                         FileUtils.copyURLToFile(url, file);
