@@ -32,18 +32,15 @@ public class MiniInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(userToken)) {
             String uniqueToken = redis.get(USER_REDIS_SESSION + ":" + userId);
             if (StringUtils.isEmpty(uniqueToken) && StringUtils.isBlank(uniqueToken)) {
-                System.out.println("请登录...");
                 returnErrorResponse(response, new IMoocJSONResult().errorTokenMsg("请登录..."));
                 return false;
             } else {
                 if (!uniqueToken.equals(userToken)) {
-                    System.out.println("账号被挤出...");
                     returnErrorResponse(response, new IMoocJSONResult().errorTokenMsg("账号被挤出..."));
                     return false;
                 }
             }
         } else {
-            System.out.println("请登录...");
             returnErrorResponse(response, new IMoocJSONResult().errorTokenMsg("请登录..."));
             return false;
         }

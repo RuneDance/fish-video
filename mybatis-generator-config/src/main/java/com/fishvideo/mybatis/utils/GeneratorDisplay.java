@@ -27,7 +27,7 @@ public class GeneratorDisplay {
 
 	} 
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		try {
 			GeneratorDisplay generatorSqlmap = new GeneratorDisplay();
 			generatorSqlmap.generator();
@@ -35,5 +35,5 @@ public class GeneratorDisplay {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 }

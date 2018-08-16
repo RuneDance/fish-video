@@ -15,12 +15,12 @@ public class MD5Utils {
 		return newstr;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			String md5 = getMD5Str("imooc");
 			System.out.println(md5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
